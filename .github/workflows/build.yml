@@ -10,22 +10,25 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14   # macOS Sonoma runner (has Xcode 15/16 + Swift toolchain)
+    runs-on: macos-15   # macOS Sequoia runner — ships modern Xcode 16 toolchains
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Select latest stable Xcode
+        # WhisperKit's recent releases need a modern Swift toolchain; pin the
+        # newest stable Xcode on the runner so package resolution doesn't fail.
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: Resolve Swift packages (WhisperKit)
-        run: |
-          xcodebuild -project OmniScribe.xcodeproj \
-            -target OmniScribe \
-            -resolvePackageDependencies
-
-      - name: Build (unsigned)
+      - name: Build (unsigned, auto-resolves WhisperKit)
+        # No separate resolve step — `xcodebuild build` resolves Swift packages
+        # itself, which is more reliable than a standalone -resolvePackageDependencies.
         run: |
           set -o pipefail
           xcodebuild \
@@ -33,14 +36,12 @@ jobs:
             -target OmniScribe \
             -configuration Release \
             -derivedDataPath build \
+            -disableAutomaticPackageResolution NO \
             MACOSX_DEPLOYMENT_TARGET=14.0 \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGN_ENTITLEMENTS="" \
             build
-          # ^ MACOSX_DEPLOYMENT_TARGET=14.0: recent WhisperKit releases require
-          #   macOS 14. If your Mac is on macOS 13 and the build fails to resolve,
-          #   pin an older WhisperKit version in Xcode instead of raising this.
 
       - name: Ad-hoc sign the app
         # An ad-hoc signature lets the app launch on your Mac. Accessibility
