@@ -1,0 +1,17 @@
+# Build output
+build/
+DerivedData/
+*.o
+*.hmap
+
+# Xcode user state (per-user, not shared)
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+
+# Swift Package Manager local caches (Package.resolved IS tracked — do not ignore it)
+.build/
+.swiftpm/xcode/package.xcworkspace/xcuserdata/
+
+# macOS
+.DS_Store

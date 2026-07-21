@@ -1,0 +1,433 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0000000000000000000000C1 /* OmniScribeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B1 /* OmniScribeApp.swift */; };
+		0000000000000000000000C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B2 /* AppDelegate.swift */; };
+		0000000000000000000000C3 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B3 /* MenuBarManager.swift */; };
+		0000000000000000000000C4 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B4 /* PermissionManager.swift */; };
+		0000000000000000000000C5 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B5 /* HotkeyManager.swift */; };
+		0000000000000000000000C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B8 /* Assets.xcassets */; };
+		0000000000000000000000C7 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000B9 /* AudioSessionManager.swift */; };
+		0000000000000000000000C8 /* VoiceActivityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000BA /* VoiceActivityDetector.swift */; };
+		0000000000000000000000C9 /* LocalTranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000BB /* LocalTranscriptionService.swift */; };
+		0000000000000000000000CA /* STTResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0000000000000000000000BC /* STTResult.swift */; };
+		00000000000000000000E1 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D1 /* KeychainManager.swift */; };
+		00000000000000000000E2 /* AIProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D2 /* AIProviderProtocol.swift */; };
+		00000000000000000000E3 /* ProcessingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D3 /* ProcessingMode.swift */; };
+		00000000000000000000E4 /* ClaudeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D4 /* ClaudeService.swift */; };
+		00000000000000000000E5 /* AILayerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D5 /* AILayerCoordinator.swift */; };
+		00000000000000000000E6 /* ClipboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D6 /* ClipboardState.swift */; };
+		00000000000000000000E7 /* TextInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D7 /* TextInjector.swift */; };
+		00000000000000000000E8 /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D8 /* AppPreferences.swift */; };
+		00000000000000000000E9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000D9 /* SettingsView.swift */; };
+		00000000000000000000EA /* RecordingHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DA /* RecordingHUDView.swift */; };
+		00000000000000000000EB /* HUDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DB /* HUDPanel.swift */; };
+		00000000000000000000EC /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DC /* WindowManager.swift */; };
+		00000000000000000000F003 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000F002 /* WhisperKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0000000000000000000000AF /* OmniScribe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniScribe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0000000000000000000000B1 /* OmniScribeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniScribeApp.swift; sourceTree = "<group>"; };
+		0000000000000000000000B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0000000000000000000000B3 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		0000000000000000000000B4 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		0000000000000000000000B5 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		0000000000000000000000B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0000000000000000000000B7 /* OmniScribe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OmniScribe.entitlements; sourceTree = "<group>"; };
+		0000000000000000000000B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0000000000000000000000B9 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
+		0000000000000000000000BA /* VoiceActivityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActivityDetector.swift; sourceTree = "<group>"; };
+		0000000000000000000000BB /* LocalTranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTranscriptionService.swift; sourceTree = "<group>"; };
+		0000000000000000000000BC /* STTResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTResult.swift; sourceTree = "<group>"; };
+		00000000000000000000D1 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		00000000000000000000D2 /* AIProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderProtocol.swift; sourceTree = "<group>"; };
+		00000000000000000000D3 /* ProcessingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingMode.swift; sourceTree = "<group>"; };
+		00000000000000000000D4 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
+		00000000000000000000D5 /* AILayerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AILayerCoordinator.swift; sourceTree = "<group>"; };
+		00000000000000000000D6 /* ClipboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardState.swift; sourceTree = "<group>"; };
+		00000000000000000000D7 /* TextInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInjector.swift; sourceTree = "<group>"; };
+		00000000000000000000D8 /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
+		00000000000000000000D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		00000000000000000000DA /* RecordingHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHUDView.swift; sourceTree = "<group>"; };
+		00000000000000000000DB /* HUDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDPanel.swift; sourceTree = "<group>"; };
+		00000000000000000000DC /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0000000000000000000000AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000F003 /* WhisperKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0000000000000000000000A2 /* root */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000A4 /* OmniScribe */,
+				0000000000000000000000A3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0000000000000000000000A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000AF /* OmniScribe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0000000000000000000000A4 /* OmniScribe */ = {
+			isa = PBXGroup;
+			children = (
+				0000000000000000000000B1 /* OmniScribeApp.swift */,
+				0000000000000000000000B2 /* AppDelegate.swift */,
+				0000000000000000000000B3 /* MenuBarManager.swift */,
+				0000000000000000000000B4 /* PermissionManager.swift */,
+				0000000000000000000000B5 /* HotkeyManager.swift */,
+				0000000000000000000000B9 /* AudioSessionManager.swift */,
+				0000000000000000000000BA /* VoiceActivityDetector.swift */,
+				0000000000000000000000BB /* LocalTranscriptionService.swift */,
+				0000000000000000000000BC /* STTResult.swift */,
+				00000000000000000000D2 /* AIProviderProtocol.swift */,
+				00000000000000000000D3 /* ProcessingMode.swift */,
+				00000000000000000000D4 /* ClaudeService.swift */,
+				00000000000000000000D5 /* AILayerCoordinator.swift */,
+				00000000000000000000D1 /* KeychainManager.swift */,
+				00000000000000000000D6 /* ClipboardState.swift */,
+				00000000000000000000D7 /* TextInjector.swift */,
+				00000000000000000000D8 /* AppPreferences.swift */,
+				00000000000000000000D9 /* SettingsView.swift */,
+				00000000000000000000DA /* RecordingHUDView.swift */,
+				00000000000000000000DB /* HUDPanel.swift */,
+				00000000000000000000DC /* WindowManager.swift */,
+				0000000000000000000000B8 /* Assets.xcassets */,
+				0000000000000000000000B6 /* Info.plist */,
+				0000000000000000000000B7 /* OmniScribe.entitlements */,
+			);
+			path = OmniScribe;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0000000000000000000000A5 /* OmniScribe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0000000000000000000000A7 /* Build configuration list for PBXNativeTarget "OmniScribe" */;
+			buildPhases = (
+				0000000000000000000000AC /* Sources */,
+				0000000000000000000000AD /* Frameworks */,
+				0000000000000000000000AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OmniScribe;
+			packageProductDependencies = (
+				00000000000000000000F002 /* WhisperKit */,
+			);
+			productName = OmniScribe;
+			productReference = 0000000000000000000000AF /* OmniScribe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0000000000000000000000A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					0000000000000000000000A5 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 0000000000000000000000A6 /* Build configuration list for PBXProject "OmniScribe" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0000000000000000000000A2;
+			packageReferences = (
+				00000000000000000000F001 /* XCRemoteSwiftPackageReference "WhisperKit" */,
+			);
+			productRefGroup = 0000000000000000000000A3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0000000000000000000000A5 /* OmniScribe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0000000000000000000000AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0000000000000000000000C6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0000000000000000000000AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0000000000000000000000C1 /* OmniScribeApp.swift in Sources */,
+				0000000000000000000000C2 /* AppDelegate.swift in Sources */,
+				0000000000000000000000C3 /* MenuBarManager.swift in Sources */,
+				0000000000000000000000C4 /* PermissionManager.swift in Sources */,
+				0000000000000000000000C5 /* HotkeyManager.swift in Sources */,
+				0000000000000000000000C7 /* AudioSessionManager.swift in Sources */,
+				0000000000000000000000C8 /* VoiceActivityDetector.swift in Sources */,
+				0000000000000000000000C9 /* LocalTranscriptionService.swift in Sources */,
+				0000000000000000000000CA /* STTResult.swift in Sources */,
+				00000000000000000000E2 /* AIProviderProtocol.swift in Sources */,
+				00000000000000000000E3 /* ProcessingMode.swift in Sources */,
+				00000000000000000000E4 /* ClaudeService.swift in Sources */,
+				00000000000000000000E5 /* AILayerCoordinator.swift in Sources */,
+				00000000000000000000E1 /* KeychainManager.swift in Sources */,
+				00000000000000000000E6 /* ClipboardState.swift in Sources */,
+				00000000000000000000E7 /* TextInjector.swift in Sources */,
+				00000000000000000000E8 /* AppPreferences.swift in Sources */,
+				00000000000000000000E9 /* SettingsView.swift in Sources */,
+				00000000000000000000EA /* RecordingHUDView.swift in Sources */,
+				00000000000000000000EB /* HUDPanel.swift in Sources */,
+				00000000000000000000EC /* WindowManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		00000000000000000000F001 /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		00000000000000000000F002 /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00000000000000000000F001 /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0000000000000000000000A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0000000000000000000000A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		0000000000000000000000AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OmniScribe/OmniScribe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OmniScribe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omniscribe.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0000000000000000000000AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OmniScribe/OmniScribe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OmniScribe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omniscribe.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0000000000000000000000A6 /* Build configuration list for PBXProject "OmniScribe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0000000000000000000000A8 /* Debug */,
+				0000000000000000000000A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0000000000000000000000A7 /* Build configuration list for PBXNativeTarget "OmniScribe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0000000000000000000000AA /* Debug */,
+				0000000000000000000000AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 0000000000000000000000A1 /* Project object */;
+}

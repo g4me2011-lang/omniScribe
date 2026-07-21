@@ -1,0 +1,64 @@
+name: Build OmniScribe
+
+# Runs on GitHub's free macOS servers. Produces a ready-to-run OmniScribe.app
+# you can download from the run's "Artifacts" section — no local compiling.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # lets you trigger a build manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: macos-14   # macOS Sonoma runner (has Xcode 15/16 + Swift toolchain)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Resolve Swift packages (WhisperKit)
+        run: |
+          xcodebuild -project OmniScribe.xcodeproj \
+            -target OmniScribe \
+            -resolvePackageDependencies
+
+      - name: Build (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project OmniScribe.xcodeproj \
+            -target OmniScribe \
+            -configuration Release \
+            -derivedDataPath build \
+            MACOSX_DEPLOYMENT_TARGET=14.0 \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGN_ENTITLEMENTS="" \
+            build
+          # ^ MACOSX_DEPLOYMENT_TARGET=14.0: recent WhisperKit releases require
+          #   macOS 14. If your Mac is on macOS 13 and the build fails to resolve,
+          #   pin an older WhisperKit version in Xcode instead of raising this.
+
+      - name: Ad-hoc sign the app
+        # An ad-hoc signature lets the app launch on your Mac. Accessibility
+        # permission will need re-granting after each new build (the signature
+        # changes every time).
+        run: |
+          APP="build/Build/Products/Release/OmniScribe.app"
+          codesign --force --deep --sign - "$APP"
+          codesign --verify --verbose "$APP" || true
+
+      - name: Zip the app
+        run: |
+          cd build/Build/Products/Release
+          ditto -c -k --keepParent OmniScribe.app OmniScribe.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OmniScribe-app
+          path: build/Build/Products/Release/OmniScribe.zip
+          if-no-files-found: error

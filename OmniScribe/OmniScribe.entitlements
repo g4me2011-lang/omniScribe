@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+	<!--
+		Sandboxing is DISABLED for development.
+
+		Reason: CGEventTap (required for the global Option+Space hotkey) and
+		the Accessibility API do not work inside the App Sandbox without
+		temporary exceptions that are rarely approved by App Review.
+
+		For distribution outside the Mac App Store (direct download / Gatekeeper),
+		disabling the sandbox is the standard approach for power-user utilities.
+
+		If targeting the Mac App Store in the future, re-enable the sandbox and
+		apply for the com.apple.security.temporary-exception.* entitlements.
+	-->
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
+
+	<!-- Microphone access (also declared in Info.plist NSMicrophoneUsageDescription) -->
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
+
+</dict>
+</plist>
