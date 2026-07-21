@@ -27,16 +27,16 @@ jobs:
         run: xcodebuild -version
 
       - name: Build (unsigned, auto-resolves WhisperKit)
-        # No separate resolve step — `xcodebuild build` resolves Swift packages
-        # itself, which is more reliable than a standalone -resolvePackageDependencies.
+        # Uses -scheme (required alongside -derivedDataPath). The shared scheme
+        # lives in OmniScribe.xcodeproj/xcshareddata/xcschemes/. xcodebuild
+        # resolves Swift packages automatically when building a scheme.
         run: |
           set -o pipefail
           xcodebuild \
             -project OmniScribe.xcodeproj \
-            -target OmniScribe \
+            -scheme OmniScribe \
             -configuration Release \
             -derivedDataPath build \
-            -disableAutomaticPackageResolution NO \
             MACOSX_DEPLOYMENT_TARGET=14.0 \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY="" \
