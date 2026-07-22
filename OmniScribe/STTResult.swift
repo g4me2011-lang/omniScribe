@@ -20,8 +20,8 @@ struct STTResult: Equatable {
     let source: Source
 
     enum Source: String {
-        case local  = "WhisperKit (local)"
-        case cloud  = "Whisper API (cloud)"
+        case local  = "Apple Speech (on-device)"
+        case cloud  = "Apple Speech (server)"
     }
 
     /// `true` when the model returned no usable words.

@@ -1,104 +1,181 @@
 import Foundation
+import Speech
+import AVFoundation
 
-#if canImport(WhisperKit)
-import WhisperKit
-#endif
-
-/// Errors from the local speech-to-text path.
+/// Errors from the on-device speech-to-text path.
 enum TranscriptionError: LocalizedError {
-    case whisperKitNotLinked
-    case modelNotReady
+    case notAuthorized
+    case recognizerUnavailable(localeIdentifier: String)
     case emptyAudio
-    case transcriptionFailed(String)
+    case audioWriteFailed(String)
+    case recognitionFailed(String)
 
     var errorDescription: String? {
         switch self {
-        case .whisperKitNotLinked:
-            return "WhisperKit is not linked. Add the Swift package to enable on-device transcription."
-        case .modelNotReady:
-            return "The local Whisper model is still loading. Try again in a moment."
+        case .notAuthorized:
+            return "Speech Recognition access is required. Enable it in System Settings → Privacy & Security → Speech Recognition."
+        case .recognizerUnavailable(let localeIdentifier):
+            return "Speech recognition is unavailable for language \"\(localeIdentifier)\". Try switching your system language, or check your connection."
         case .emptyAudio:
             return "No speech was captured."
-        case .transcriptionFailed(let message):
+        case .audioWriteFailed(let detail):
+            return "Could not prepare the audio for recognition: \(detail)."
+        case .recognitionFailed(let message):
             return "Transcription failed: \(message)"
         }
     }
 }
 
-/// On-device speech-to-text via WhisperKit (CoreML, Apple-Silicon optimised).
+/// On-device / offline speech-to-text via Apple's `Speech` framework
+/// (`SFSpeechRecognizer`). Chosen over a bundled ML model for reliability: it is
+/// part of macOS, needs no model download, and — where the language supports it —
+/// runs fully on-device for privacy.
 ///
-/// Key decisions matching the spec:
-/// - An `actor`, so model state is isolated and transcription can never block the
-///   main thread – callers `await` from wherever they like.
-/// - The model is loaded **once** via `preloadModel()` at app launch, not on the
-///   hotkey press, to eliminate first-use latency.
-/// - The WhisperKit dependency is wrapped in `#if canImport(WhisperKit)`. The
-///   project therefore compiles and runs (audio + VAD fully working) **before**
-///   the package is added; once you add it in Xcode the real path activates with
-///   zero further code changes.
+/// Kept as an `actor` with the same public surface as before so the rest of the
+/// pipeline (`AppDelegate`) is unchanged: `preloadModel()` at launch,
+/// `transcribe(samples:)` per dictation.
 actor LocalTranscriptionService {
 
-    /// Model name to load. "base" balances speed and accuracy; "small" is more
-    /// accurate but heavier. Both are quantized CoreML variants on Apple Silicon.
-    private let modelName: String
+    /// Recognition language. Defaults to the user's current locale so a Lithuanian
+    /// system dictates Lithuanian, an English system English, etc.
+    private let locale: Locale
 
     private(set) var isModelLoaded = false
 
-    #if canImport(WhisperKit)
-    private var whisperKit: WhisperKit?
-    #endif
-
-    init(modelName: String = "base") {
-        self.modelName = modelName
+    init(locale: Locale = .current) {
+        self.locale = locale
     }
 
-    /// Downloads (first run) and loads the model into memory. Safe to call once
-    /// at launch; subsequent calls are no-ops. Never throws – failure just leaves
-    /// `isModelLoaded == false`, and `transcribe` reports a clear error later.
+    // MARK: – Launch-time setup
+
+    /// Requests Speech Recognition authorization so the system prompt appears at
+    /// launch (not mid-dictation). Never throws; failure just means `transcribe`
+    /// will report a clear error later.
     func preloadModel() async {
-        guard !isModelLoaded else { return }
+        let status = await Self.requestAuthorization()
+        isModelLoaded = (status == .authorized)
 
-        #if canImport(WhisperKit)
-        do {
-            let config = WhisperKitConfig(model: modelName)
-            whisperKit = try await WhisperKit(config)
-            isModelLoaded = true
-            print("[LocalTranscriptionService] ✅ WhisperKit model '\(modelName)' loaded.")
-        } catch {
-            isModelLoaded = false
-            print("[LocalTranscriptionService] ❌ Failed to load model: \(error.localizedDescription)")
+        switch status {
+        case .authorized:
+            let onDevice = SFSpeechRecognizer(locale: locale)?.supportsOnDeviceRecognition ?? false
+            print("[LocalTranscriptionService] ✅ Speech authorized (locale \(locale.identifier), on-device: \(onDevice)).")
+        default:
+            print("[LocalTranscriptionService] ⚠️ Speech not authorized (status \(status.rawValue)).")
         }
-        #else
-        print("[LocalTranscriptionService] ⚠️ WhisperKit not linked – add the SPM package to enable local STT.")
-        #endif
     }
+
+    // MARK: – Transcription
 
     /// Transcribes a 16 kHz mono Float32 buffer. Runs off the main thread by
     /// virtue of the actor. Throws a catchable `TranscriptionError` on any failure.
     func transcribe(samples: [Float]) async throws -> STTResult {
         guard !samples.isEmpty else { throw TranscriptionError.emptyAudio }
 
+        guard SFSpeechRecognizer.authorizationStatus() == .authorized else {
+            throw TranscriptionError.notAuthorized
+        }
+
+        guard let recognizer = SFSpeechRecognizer(locale: locale), recognizer.isAvailable else {
+            throw TranscriptionError.recognizerUnavailable(localeIdentifier: locale.identifier)
+        }
+
+        // SFSpeechRecognizer works from an audio file; write the captured samples
+        // to a temporary 16 kHz mono WAV, transcribe, then clean up.
+        let url = try Self.writeWav(samples: samples, sampleRate: 16_000)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let request = SFSpeechURLRecognitionRequest(url: url)
+        request.shouldReportPartialResults = false
+        // Prefer fully on-device recognition when the language supports it (privacy);
+        // otherwise fall back to Apple's server recognition (needs network).
+        let onDevice = recognizer.supportsOnDeviceRecognition
+        request.requiresOnDeviceRecognition = onDevice
+        if #available(macOS 13.0, *) {
+            request.addsPunctuation = true
+        }
+
+        let text = try await Self.recognize(recognizer: recognizer, request: request)
         let duration = TimeInterval(samples.count) / 16_000.0
 
-        #if canImport(WhisperKit)
-        guard let whisperKit, isModelLoaded else { throw TranscriptionError.modelNotReady }
+        return STTResult(text: text.trimmingCharacters(in: .whitespacesAndNewlines),
+                         language: locale.identifier,
+                         audioDuration: duration,
+                         source: onDevice ? .local : .cloud)
+    }
+
+    // MARK: – Helpers
+
+    private static func requestAuthorization() async -> SFSpeechRecognizerAuthorizationStatus {
+        await withCheckedContinuation { continuation in
+            SFSpeechRecognizer.requestAuthorization { continuation.resume(returning: $0) }
+        }
+    }
+
+    /// Runs one recognition task and returns the final transcript string.
+    private static func recognize(recognizer: SFSpeechRecognizer,
+                                  request: SFSpeechRecognitionRequest) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            var didResume = false
+            recognizer.recognitionTask(with: request) { result, error in
+                if let error {
+                    if !didResume {
+                        didResume = true
+                        continuation.resume(throwing: TranscriptionError.recognitionFailed(error.localizedDescription))
+                    }
+                    return
+                }
+                guard let result, result.isFinal else { return }
+                if !didResume {
+                    didResume = true
+                    continuation.resume(returning: result.bestTranscription.formattedString)
+                }
+            }
+        }
+    }
+
+    /// Writes Float samples to a temporary mono WAV file for `SFSpeechURLRecognitionRequest`.
+    private static func writeWav(samples: [Float], sampleRate: Double) throws -> URL {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("omniscribe-\(UUID().uuidString).wav")
+
+        let settings: [String: Any] = [
+            AVFormatIDKey:            kAudioFormatLinearPCM,
+            AVSampleRateKey:          sampleRate,
+            AVNumberOfChannelsKey:    1,
+            AVLinearPCMBitDepthKey:   32,
+            AVLinearPCMIsFloatKey:    true,
+            AVLinearPCMIsNonInterleaved: false,
+            AVLinearPCMIsBigEndianKey: false,
+        ]
+
+        let file: AVAudioFile
+        do {
+            file = try AVAudioFile(forWriting: url,
+                                   settings: settings,
+                                   commonFormat: .pcmFormatFloat32,
+                                   interleaved: false)
+        } catch {
+            throw TranscriptionError.audioWriteFailed(error.localizedDescription)
+        }
+
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat,
+                                            frameCapacity: AVAudioFrameCount(samples.count)) else {
+            throw TranscriptionError.audioWriteFailed("buffer allocation")
+        }
+        buffer.frameLength = AVAudioFrameCount(samples.count)
+        if let channel = buffer.floatChannelData {
+            samples.withUnsafeBufferPointer { src in
+                if let base = src.baseAddress {
+                    channel[0].update(from: base, count: samples.count)
+                }
+            }
+        }
 
         do {
-            let results = try await whisperKit.transcribe(audioArray: samples)
-            let text = results
-                .map(\.text)
-                .joined(separator: " ")
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-
-            return STTResult(text: text,
-                             language: results.first?.language,
-                             audioDuration: duration,
-                             source: .local)
+            try file.write(from: buffer)
         } catch {
-            throw TranscriptionError.transcriptionFailed(error.localizedDescription)
+            throw TranscriptionError.audioWriteFailed(error.localizedDescription)
         }
-        #else
-        throw TranscriptionError.whisperKitNotLinked
-        #endif
+        return url
     }
 }
