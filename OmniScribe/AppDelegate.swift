@@ -17,7 +17,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var hotkeyManager: HotkeyManager?
     private var audioManager: AudioSessionManager?
 
-    private let transcriptionService = LocalTranscriptionService()
+    // Cloud STT (OpenAI Whisper) — supports Lithuanian and runs well on Intel
+    // Macs, where Apple's Speech framework lacks Lithuanian and WhisperKit crashes.
+    private let transcriptionService = CloudWhisperService()
     private let aiCoordinator = AILayerCoordinator.shared
 
     /// Guards against re-entrancy: the VAD timeout and a manual ⌥Space can both

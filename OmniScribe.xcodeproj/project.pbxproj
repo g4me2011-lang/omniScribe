@@ -29,6 +29,7 @@
 		00000000000000000000EA /* RecordingHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DA /* RecordingHUDView.swift */; };
 		00000000000000000000EB /* HUDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DB /* HUDPanel.swift */; };
 		00000000000000000000EC /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DC /* WindowManager.swift */; };
+		00000000000000000000ED /* CloudWhisperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000DD /* CloudWhisperService.swift */; };
 		00000000000000000000F003 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000F002 /* WhisperKit */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		00000000000000000000DA /* RecordingHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHUDView.swift; sourceTree = "<group>"; };
 		00000000000000000000DB /* HUDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDPanel.swift; sourceTree = "<group>"; };
 		00000000000000000000DC /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		00000000000000000000DD /* CloudWhisperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudWhisperService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				00000000000000000000DA /* RecordingHUDView.swift */,
 				00000000000000000000DB /* HUDPanel.swift */,
 				00000000000000000000DC /* WindowManager.swift */,
+				00000000000000000000DD /* CloudWhisperService.swift */,
 				0000000000000000000000B8 /* Assets.xcassets */,
 				0000000000000000000000B6 /* Info.plist */,
 				0000000000000000000000B7 /* OmniScribe.entitlements */,
@@ -215,6 +218,7 @@
 				00000000000000000000EA /* RecordingHUDView.swift in Sources */,
 				00000000000000000000EB /* HUDPanel.swift in Sources */,
 				00000000000000000000EC /* WindowManager.swift in Sources */,
+				00000000000000000000ED /* CloudWhisperService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
