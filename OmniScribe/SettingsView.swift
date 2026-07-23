@@ -1,5 +1,19 @@
 import SwiftUI
 
+/// Applies the grouped form style on macOS 13+, and leaves the default Form
+/// appearance on macOS 12 (where `.formStyle` does not exist). Keeps the app
+/// building for a 12.0 deployment target while still looking native on newer OSes.
+private extension View {
+    @ViewBuilder
+    func groupedFormIfAvailable() -> some View {
+        if #available(macOS 13.0, *) {
+            self.formStyle(.grouped)
+        } else {
+            self
+        }
+    }
+}
+
 /// The root Settings window content: a native macOS tabbed interface.
 ///
 /// Uses `TabView` + `Form` + native `Picker`s — no iOS-style `NavigationView`
@@ -43,7 +57,7 @@ private struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .formStyle(.grouped)
+        .groupedFormIfAvailable()
     }
 }
 
@@ -62,7 +76,7 @@ private struct APIKeysSettingsView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .formStyle(.grouped)
+        .groupedFormIfAvailable()
     }
 }
 
