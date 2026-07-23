@@ -36,13 +36,15 @@ enum TranscriptionError: LocalizedError {
 /// `transcribe(samples:)` per dictation.
 actor LocalTranscriptionService {
 
-    /// Recognition language. Defaults to the user's current locale so a Lithuanian
-    /// system dictates Lithuanian, an English system English, etc.
+    /// Recognition language. Defaults to Lithuanian — the system locale (e.g.
+    /// `en_LT`) reflects UI language, not spoken language, so relying on it made
+    /// an English recognizer transcribe Lithuanian speech into an empty string.
+    /// A later Settings picker can override this.
     private let locale: Locale
 
     private(set) var isModelLoaded = false
 
-    init(locale: Locale = .current) {
+    init(locale: Locale = Locale(identifier: "lt-LT")) {
         self.locale = locale
     }
 
@@ -138,12 +140,15 @@ actor LocalTranscriptionService {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("omniscribe-\(UUID().uuidString).wav")
 
+        // File is written as 16-bit integer PCM (the format SFSpeech reads most
+        // reliably); the in-memory buffer stays Float32 and AVAudioFile converts
+        // on write.
         let settings: [String: Any] = [
             AVFormatIDKey:            kAudioFormatLinearPCM,
             AVSampleRateKey:          sampleRate,
             AVNumberOfChannelsKey:    1,
-            AVLinearPCMBitDepthKey:   32,
-            AVLinearPCMIsFloatKey:    true,
+            AVLinearPCMBitDepthKey:   16,
+            AVLinearPCMIsFloatKey:    false,
             AVLinearPCMIsNonInterleaved: false,
             AVLinearPCMIsBigEndianKey: false,
         ]
